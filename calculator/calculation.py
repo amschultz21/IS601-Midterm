@@ -1,12 +1,20 @@
 class Calculation:
+    """Represents a mathematical calculation with two numbers and an operation type."""
+
     def __init__(self, a, b, operation):
-        """Initialize Calculation with two numbers and an operation."""
+        """
+        Initializes a Calculation object.
+
+        :param a: First operand
+        :param b: Second operand
+        :param operation: Type of operation ('add', 'subtract', 'multiply', 'divide')
+        """
         self.a = a
         self.b = b
         self.operation = operation
 
     def execute(self):
-        """Executes the calculation based on the operation type."""
+        """Performs the calculation based on the operation type."""
         if self.operation == "add":
             return self.a + self.b
         elif self.operation == "subtract":
