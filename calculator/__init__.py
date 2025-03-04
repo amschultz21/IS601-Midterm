@@ -1,25 +1,21 @@
-from calculator.calculation import Calculation
-from calculator.operations import add, subtract, multiply, divide
+from .calculation import Calculation
+from .operations import add, subtract, multiply, divide
 
 class Calculator:
     @staticmethod
     def add(a, b):
-        calculation = a + b
-        return calculation
+        return Calculation(a, b).add()
 
     @staticmethod
     def subtract(a, b):
-        calculation = a - b
-        return calculation
+        return Calculation(a, b).subtract()
 
     @staticmethod
     def multiply(a, b):
-        calculation = a * b
-        return calculation
+        return Calculation(a, b).multiply()
 
     @staticmethod
     def divide(a, b):
         if b == 0:
             raise ZeroDivisionError("Division by zero is not allowed.")
-        calculation = a / b
-        return calculation
+        return Calculation(a, b).divide()
