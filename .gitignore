@@ -2,5 +2,5 @@
 .coverage
 .pytest_cache
 .*pycache*
-__pycashe__
+__pycache__
 .env
