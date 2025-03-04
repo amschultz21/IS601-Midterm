@@ -1,17 +1,21 @@
 class Calculation:
-    def __init__(self, num1, num2, operation):
-        self.num1 = num1
-        self.num2 = num2
+    def __init__(self, a, b, operation):
+        """Initialize Calculation with two numbers and an operation."""
+        self.a = a
+        self.b = b
         self.operation = operation
 
-    def perform(self):
+    def execute(self):
+        """Executes the calculation based on the operation type."""
         if self.operation == "add":
-            return self.num1 + self.num2
+            return self.a + self.b
         elif self.operation == "subtract":
-            return self.num1 - self.num2
+            return self.a - self.b
         elif self.operation == "multiply":
-            return self.num1 * self.num2
+            return self.a * self.b
         elif self.operation == "divide":
-            return self.num1 / self.num2 if self.num2 != 0 else None
+            if self.b == 0:
+                raise ZeroDivisionError("Division by zero is not allowed.")
+            return self.a / self.b
         else:
             raise ValueError("Invalid operation")
