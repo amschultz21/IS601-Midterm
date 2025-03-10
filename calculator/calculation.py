@@ -1,29 +1,24 @@
-class Calculation:
-    """Represents a mathematical calculation with two numbers and an operation type."""
+"""
+This module defines the Calculation class that executes arithmetic operations.
+"""
 
-    def __init__(self, a, b, operation):
+from typing import Callable
+
+class Calculation:
+    """Represents a mathematical calculation with two numbers and an operation function."""
+
+    def __init__(self, a: float, b: float, operation: Callable[[float, float], float]):
         """
-        Initializes a Calculation object.
+        Initializes a Calculation instance.
 
         :param a: First operand
         :param b: Second operand
-        :param operation: Type of operation ('add', 'subtract', 'multiply', 'divide')
+        :param operation: Function that performs the calculation
         """
         self.a = a
         self.b = b
         self.operation = operation
 
-    def execute(self):
-        """Performs the calculation based on the operation type."""
-        if self.operation == "add":
-            return self.a + self.b
-        elif self.operation == "subtract":
-            return self.a - self.b
-        elif self.operation == "multiply":
-            return self.a * self.b
-        elif self.operation == "divide":
-            if self.b == 0:
-                raise ZeroDivisionError("Division by zero is not allowed.")
-            return self.a / self.b
-        else:
-            raise ValueError("Invalid operation")
+    def execute(self) -> float:
+        """Executes the stored operation function."""
+        return self.operation(self.a, self.b)  
