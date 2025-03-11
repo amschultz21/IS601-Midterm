@@ -1,0 +1,6 @@
+2025-03-11 14:58:30,147 - INFO - 🛠 Running in local mode
+2025-03-11 14:58:30,153 - INFO - Loaded plugins: ['add', 'divide', 'multiply', 'subtract']
+2025-03-11 14:58:35,605 - WARNING - Invalid command attempted: cat calculator.log
+2025-03-11 14:58:37,661 - WARNING - Invalid command attempted: cat calculator.log
+2025-03-11 14:58:45,294 - INFO - Executed command: add(4.0, 4.0) = 8.0
+2025-03-11 14:58:47,236 - INFO - User exited the calculator.
