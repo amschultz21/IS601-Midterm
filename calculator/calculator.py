@@ -1,44 +1,30 @@
+"""
+This module defines the Calculator class, which manages arithmetic operations using the Command Pattern.
+"""
+
 from typing import List, Optional
 from .calculation import Calculation
+from .commands import Command
+from .operations import add, subtract, multiply, divide
 
 class Calculator:
-    """A simple calculator class that stores and performs calculations."""
+    """A calculator that stores executed commands."""
     
-    history: List[Calculation] = []  # Stores calculation history
+    history: List[Command] = []  # Stores command history
 
     @staticmethod
-    def add(a: float, b: float) -> float:
-        """Returns the sum of a and b."""
-        return a + b
-
-    @staticmethod
-    def subtract(a: float, b: float) -> float:
-        """Returns the result of subtracting b from a."""
-        return a - b
-
-    @staticmethod
-    def multiply(a: float, b: float) -> float:
-        """Returns the product of a and b."""
-        return a * b
-
-    @staticmethod
-    def divide(a: float, b: float) -> float:
-        """Returns the result of dividing a by b. Raises ZeroDivisionError if b is 0."""
-        if b == 0:
-            raise ZeroDivisionError("Division by zero is not allowed.")
-        return a / b
+    def execute_command(command: Command) -> float:
+        """Executes a command and stores it in history."""
+        result = command.execute()
+        Calculator.history.append(command)
+        return result
 
     @classmethod
-    def add_calculation(cls, calculation: Calculation) -> None:
-        """Stores a calculation in the history."""
-        cls.history.append(calculation)
-
-    @classmethod
-    def get_last_calculation(cls) -> Optional[Calculation]:
-        """Retrieves the last calculation from history, or None if history is empty."""
+    def get_last_command(cls) -> Optional[Command]:
+        """Retrieves the last executed command."""
         return cls.history[-1] if cls.history else None
 
     @classmethod
     def clear_history(cls) -> None:
-        """Clears all stored calculations."""
+        """Clears all stored commands."""
         cls.history.clear()
