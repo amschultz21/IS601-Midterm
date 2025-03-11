@@ -5,6 +5,7 @@ Calculator module that manages arithmetic operations and calculation history usi
 import pandas as pd
 import os
 from calculator.commands import Command
+from calculator.plugins.operations import operations  # Ensure this is correct
 
 HISTORY_FILE = "calculation_history.csv"
 
@@ -23,8 +24,17 @@ class Calculator:
     @classmethod
     def add_to_history(cls, operation: str, a: float, b: float, result: float):
         """Adds a calculation to the Pandas DataFrame."""
-        new_entry = pd.DataFrame([[operation, a, b, result]], columns=cls.history.columns)
-        cls.history = pd.concat([cls.history, new_entry], ignore_index=True)
+        # Ensure correct operation name is stored.
+        if callable(operation):
+            operation_name = operation.__name__
+        else:
+            operation_name = operation
+
+        new_entry = pd.DataFrame([[operation_name, a, b, result]], columns=cls.history.columns)
+        if cls.history.empty:
+            cls.history = new_entry
+        else:
+            cls.history = pd.concat([cls.history, new_entry], ignore_index=True)
 
     @classmethod
     def save_history(cls):
@@ -50,3 +60,26 @@ class Calculator:
         if not cls.history.empty:
             cls.history = cls.history.iloc[:-1]
             cls.save_history()
+
+    @classmethod
+    def get_last_command(cls):
+        """Retrieves the last executed command from history."""
+        if cls.history.empty:
+            return None
+
+        last_entry = cls.history.iloc[-1]
+        operation_name = last_entry["Operation"]
+        if operation_name not in operations:
+            print(f"ERROR: Operation '{operation_name}' not found in operations dictionary!")
+            return None
+
+        operation_func = operations[operation_name]
+        return Command(float(last_entry["A"]), float(last_entry["B"]), operation_func)
+
+from calculator.plugins.operations import add, subtract, multiply, divide
+
+# Expose these operations as class members so they can be referenced as Calculator.add, etc.
+Calculator.add = add
+Calculator.subtract = subtract
+Calculator.multiply = multiply
+Calculator.divide = divide
