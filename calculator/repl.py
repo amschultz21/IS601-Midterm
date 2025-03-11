@@ -1,9 +1,10 @@
 """
-This module implements a REPL (Read-Eval-Print Loop) for the Calculator with dynamic command loading.
+This module implements a REPL (Read-Eval-Print Loop) for the Calculator with dynamic command loading and multiprocessing.
 """
 
 import importlib
 import pkgutil
+import multiprocessing
 from calculator.calculator import Calculator
 from calculator.commands import Command
 
@@ -29,6 +30,12 @@ def display_menu():
     print(" - menu (Show this menu)")
     print(" - exit (Quit the calculator)\n")
 
+def execute_command_multiprocess(a, b, operation_func):
+    """Executes a command in a separate process for parallelism."""
+    with multiprocessing.Pool(processes=1) as pool:
+        result = pool.apply(operation_func, (a, b))
+    return result
+
 def repl():
     """Runs an interactive REPL for the calculator."""
     print("🎉 Welcome to the Interactive Calculator!")
@@ -53,8 +60,11 @@ def repl():
             a = float(input("Enter first number: "))
             b = float(input("Enter second number: "))
             command = Command(a, b, operations[user_input])
-            result = Calculator.execute_command(command)
+
+            result = execute_command_multiprocess(a, b, operations[user_input])
+            Calculator.history.append(command)
             print(f"✅ Result: {result}\n")
+
         except ValueError:
             print("❌ Invalid input. Please enter numeric values.")
         except ZeroDivisionError:
