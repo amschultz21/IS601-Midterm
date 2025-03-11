@@ -1,30 +1,52 @@
 """
-This module defines the Calculator class, which manages arithmetic operations using the Command Pattern.
+Calculator module that manages arithmetic operations and calculation history using Pandas.
 """
 
-from typing import List, Optional
-from .calculation import Calculation
-from .commands import Command
-from .operations import add, subtract, multiply, divide
+import pandas as pd
+import os
+from calculator.commands import Command
+
+HISTORY_FILE = "calculation_history.csv"
 
 class Calculator:
-    """A calculator that stores executed commands."""
+    """A calculator that stores executed commands using Pandas."""
     
-    history: List[Command] = []  # Stores command history
+    history = pd.DataFrame(columns=["Operation", "A", "B", "Result"])
 
     @staticmethod
     def execute_command(command: Command) -> float:
         """Executes a command and stores it in history."""
         result = command.execute()
-        Calculator.history.append(command)
+        Calculator.add_to_history(command.operation.__name__, command.a, command.b, result)
         return result
 
     @classmethod
-    def get_last_command(cls) -> Optional[Command]:
-        """Retrieves the last executed command."""
-        return cls.history[-1] if cls.history else None
+    def add_to_history(cls, operation: str, a: float, b: float, result: float):
+        """Adds a calculation to the Pandas DataFrame."""
+        new_entry = pd.DataFrame([[operation, a, b, result]], columns=cls.history.columns)
+        cls.history = pd.concat([cls.history, new_entry], ignore_index=True)
 
     @classmethod
-    def clear_history(cls) -> None:
-        """Clears all stored commands."""
-        cls.history.clear()
+    def save_history(cls):
+        """Saves the history to a CSV file."""
+        cls.history.to_csv(HISTORY_FILE, index=False)
+
+    @classmethod
+    def load_history(cls):
+        """Loads the calculation history from a CSV file if it exists."""
+        if os.path.exists(HISTORY_FILE):
+            cls.history = pd.read_csv(HISTORY_FILE)
+
+    @classmethod
+    def clear_history(cls):
+        """Clears all history records."""
+        cls.history = pd.DataFrame(columns=["Operation", "A", "B", "Result"])
+        if os.path.exists(HISTORY_FILE):
+            os.remove(HISTORY_FILE)
+
+    @classmethod
+    def delete_last_record(cls):
+        """Deletes the last calculation from history."""
+        if not cls.history.empty:
+            cls.history = cls.history.iloc[:-1]
+            cls.save_history()
