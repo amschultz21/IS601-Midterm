@@ -1,8 +1,18 @@
 ''' My Calculator Test'''
 
 import pytest
-from calculator.calculator import Calculator
 from calculator.calculation import Calculation
+from calculator.calculator import Calculator
+from calculator.operations import add, subtract, multiply, divide
+
+def test_imports():
+    """Tests that all imports from calculator/__init__.py work correctly."""
+    assert callable(add)
+    assert callable(subtract)
+    assert callable(multiply)
+    assert callable(divide)
+    assert isinstance(Calculator, type)  # Ensure Calculator is a class
+    assert isinstance(Calculation, type)  # Ensure Calculation is a class
 
 def test_add():
     """Tests addition in the Calculator."""
@@ -44,3 +54,15 @@ def test_clear_history():
     assert len(Calculator.history) == 1
     Calculator.clear_history()
     assert len(Calculator.history) == 0
+
+def test_operations():
+    """Tests the operations module directly."""
+    assert add(5, 3) == 8
+    assert subtract(10, 4) == 6
+    assert multiply(6, 7) == 42
+    assert divide(8, 2) == 4
+
+def test_operations_divide_by_zero():
+    """Ensures the divide function raises ZeroDivisionError when dividing by zero."""
+    with pytest.raises(ZeroDivisionError):
+        divide(10, 0)
