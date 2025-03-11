@@ -2,11 +2,18 @@
 This module implements a REPL (Read-Eval-Print Loop) for the Calculator with dynamic command loading and multiprocessing.
 """
 
+import os
 import importlib
 import pkgutil
 import multiprocessing
+from dotenv import load_dotenv
 from calculator.calculator import Calculator
 from calculator.commands import Command
+
+load_dotenv()
+environment = os.getenv("ENVIRONMENT", "development")
+
+print(f"🛠 Running in {environment} mode")
 
 def load_plugins():
     """Dynamically loads available plugins from the `calculator.plugins` package."""
