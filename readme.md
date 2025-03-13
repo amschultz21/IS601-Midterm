@@ -114,3 +114,22 @@ This Calculator REPL application provides an interactive command-line interface 
     - print(f"Running in {environment} mode")
 4. Usage
     - .env file contains ENVIRONMENT = local, this preents sensitive settings from being commited to the repository.
+
+## Logging
+
+### Logging
+1. Implementation
+    - calculator/repl.py
+2. Description
+    - Logs are stored in calculator.log, ensuring detailed records of calculations and errors.
+3. Code
+    - import logging
+
+    - logging.basicConfig
+        - filename="calculator.log",
+        - level=logging.DEBUG,
+        - format="%(asctime)s - %(levelname)s - %(message)s"
+     - logging.info("Calculator started in interactive mode.")
+4. Impact
+    - Helps in debugging and tracking user actions.
+    - Maintains an audit trail of operations.
