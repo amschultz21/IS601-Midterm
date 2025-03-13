@@ -76,23 +76,23 @@ This Calculator REPL application provides an interactive command-line interface 
 
 ### Design Patterns
 1. Facade Pattern
-    The HistoryFacade class simplifies interactions with Pandas for managing calculation history.
-    Implementation: calculator/history_facade.py
-    Description: Instead of exposing direct DataFrame manipulations, the facade provides clear methods (add_record, save, load, clear, delete_last) to simplify history management.
+    - The HistoryFacade class simplifies interactions with Pandas for managing calculation history.
+    - Implementation: calculator/history_facade.py
+    - Description: Instead of exposing direct DataFrame manipulations, the facade provides clear methods (add_record, save, load, clear, delete_last) to simplify history management.
 2. Command Pattern
-    The Command class encapsulates a calculation as an object that stores the operands and the operation.
-    Implementation: calculator/commands.py
-    Description: This pattern allows executing, storing, and reusing operations in a structured way.
+    - The Command class encapsulates a calculation as an object that stores the operands and the operation.
+    - Implementation: calculator/commands.py
+    - Description: This pattern allows executing, storing, and reusing operations in a structured way.
 3. Factory Method
-    The CommandFactory dynamically generates command objects based on user input.
-    Implementation: calculator/command_factory.py
-    Description: This allows new commands (operations) to be added with minimal changes to the core REPL.
+    - The CommandFactory dynamically generates command objects based on user input.
+    - Implementation: calculator/command_factory.py
+    - Description: This allows new commands (operations) to be added with minimal changes to the core REPL.
 4. Singleton Pattern
-    The Calculator class ensures only one instance manages history at a time.
-    Implementation: calculator/calculator.py
-    Description: This prevents inconsistencies in calculation history and ensures centralized management.
+    - The Calculator class ensures only one instance manages history at a time.
+    - Implementation: calculator/calculator.py
+    - Description: This prevents inconsistencies in calculation history and ensures centralized management.
 5. Strategy Pattern
-    Allows switching between different history management strategies (CSV-based now, but extendable to databases).
-    Implementation: calculator/history_facade.py
-    Description: By abstracting history management, different strategies (e.g., SQL-based storage) can be implemented without affecting the core calculator logic.
+    - Allows switching between different history management strategies (CSV-based now, but extendable to databases).
+    - Implementation: calculator/history_facade.py
+    - Description: By abstracting history management, different strategies (e.g., SQL-based storage) can be implemented without affecting the core calculator logic.
 
