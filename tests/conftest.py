@@ -36,10 +36,11 @@ def get_num_records(request):
     return request.config.getoption("--num_records")
 
 @pytest.fixture(scope="function")
-def generate_test_calculations(num_records_value):
+def generate_test_calculations(get_num_records):
     """
     Generates a list of Calculation instances based on the --num_records argument.
     """
+    # List of operations as provided by Calculator class members
     operations = [
         Calculator.add,
         Calculator.subtract,
@@ -49,7 +50,7 @@ def generate_test_calculations(num_records_value):
 
     test_data = []
 
-    for _ in range(num_records_value):
+    for _ in range(get_num_records):
         a = random.randint(1, 100)
         b = random.randint(1, 100)
         operation_func = random.choice(operations)

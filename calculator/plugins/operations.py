@@ -30,16 +30,13 @@ operations = {
 
 # Dynamically discover and load available plugins
 package = "calculator.plugins"
-
 for _, module_name, _ in pkgutil.iter_modules([package.replace(".", "/")]):
     if module_name not in ["operations"]:  # Avoid recursive import
         module = importlib.import_module(f"{package}.{module_name}")
         if hasattr(module, "operation"):
             op_func = module.operation
-            # If the module name is one of our standard operations,
-            # override the function's __name__ with the module name.
-            if module_name in operations:
-                op_func.__name__ = module_name
+            # Optionally, override the function's __name__ with the module name
+            op_func.__name__ = module_name
             operations[module_name] = op_func
 
 # Expose add, subtract, multiply, and divide directly.
