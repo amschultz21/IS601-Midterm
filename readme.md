@@ -58,7 +58,7 @@ This Calculator REPL application provides an interactive command-line interface 
    cd IS601-Midterm
 
 2. **Install Dependencies**
-    pip install -r requirements.txt
+    - pip install -r requirements.txt
 
 3. **Create .env File**
 
@@ -69,7 +69,7 @@ This Calculator REPL application provides an interactive command-line interface 
 
 ### Running Tests
 1. pytest
-2.  pytest --pylint
+2. pytest --pylint
 3. pytest --pylint --cov
 
 ## Architectural Decisions
@@ -96,3 +96,21 @@ This Calculator REPL application provides an interactive command-line interface 
     - Implementation: calculator/history_facade.py
     - Description: By abstracting history management, different strategies (e.g., SQL-based storage) can be implemented without affecting the core calculator logic.
 
+## Environment Variables
+
+### Environment Variables
+
+1. Implementation
+    - calculator/repl.py
+2. Description
+    - The environment variable ENVIRONMENT is used to differentiate between development and production modes.
+3. Code Example
+    - import os
+    - from dotenv import load_dotenv
+
+    - load_dotenv()  # Load environment variables from .env file
+
+    - environment = os.getenv("ENVIRONMENT", "development")  # Default to 'development'
+    - print(f"Running in {environment} mode")
+4. Usage
+    - .env file contains ENVIRONMENT = local, this preents sensitive settings from being commited to the repository.
