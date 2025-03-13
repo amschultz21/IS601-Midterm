@@ -133,3 +133,17 @@ This Calculator REPL application provides an interactive command-line interface 
 4. Impact
     - Helps in debugging and tracking user actions.
     - Maintains an audit trail of operations.
+
+## LBYL/EAFP
+
+### Look Before You Leap
+1. Implementation
+    - calculator/calculator.py
+2. Usage
+    - Ensures division is not attempted when the divison is zero.
+
+### Easier to Ask for Forgiveness than Permission
+1. Implementation
+    - calculator/repl.py
+2. Usage
+    - Instead of checking the validity of the input before each operation, the program assumes it's valid and catches errors if they occur.
